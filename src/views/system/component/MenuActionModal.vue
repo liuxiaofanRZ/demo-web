@@ -23,7 +23,7 @@
         <a-input v-model:value="formState.path" />
       </a-form-item>
       <a-form-item label="pid" name="pid">
-        <a-input v-model:value="formState.pid" />
+        <a-input disabled v-model:value="formState.pid" />
       </a-form-item>
       <a-form-item label="父级菜单" name="pid">
         <a-tree-select

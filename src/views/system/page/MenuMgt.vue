@@ -39,6 +39,12 @@
           @click="handleEdit(record)"
           >编辑</a-button
         >
+        <a-button
+          style="margin-right: 10px"
+          size="small"
+          @click="handleAdd({pid:record.id})"
+          >添加子路由</a-button
+        >
         <a-popconfirm
           title="确定删除这条数据？"
           @confirm="handleDelete(record)"
