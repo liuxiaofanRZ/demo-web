@@ -19,11 +19,9 @@
     :showQuickJumper="true"
     :dataSource="dataSource"
     :columns="columns"
-    bordered
     @change="handlePageChange"
     :expandedRowKeys="expandedRowKeys"
     @expandedRowsChange="expandedRowsChange"
-    
     
     rowKey="id"
   >
@@ -65,22 +63,19 @@ import { ref } from 'vue'
 const columns = [
   {
     title: '标题',
-    align: 'center',
+    // align: 'center',
     dataIndex: 'title',
   },
   {
     title: '路径',
-    align: 'center',
     dataIndex: 'path',
   },
   {
     title: '组件路径',
-    align: 'center',
     dataIndex: 'component',
   },
   {
     title: 'name',
-    align: 'center',
     dataIndex: 'name',
   },
   {
