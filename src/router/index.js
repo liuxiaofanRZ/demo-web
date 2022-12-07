@@ -11,7 +11,13 @@ const router = createRouter({
       redirect: 'Home',
       component: BaseLayout,
       name: 'base',
-      children: [],
+      children: [
+        // {
+        //   path:"/MenuMgt",
+        //   name:"MenuMgt",
+        //   component: ()=>import("../views/system/page/MenuMgt.vue")
+        // }
+      ],
     },
     {
       path: '/:pathMatch(.*)',
@@ -20,7 +26,7 @@ const router = createRouter({
     },
   ],
 })
-
+// 动态路由添加标志
 let dynamicRoutesFlag = false
 router.beforeResolve(async (to, from) => {
   if (dynamicRoutesFlag) {

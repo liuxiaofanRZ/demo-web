@@ -1,39 +1,31 @@
 import { useLoadData } from './useLoadData'
-import { message } from 'ant-design-vue'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
+import { useAction } from './useAction'
 
-// pageConfig = { 
-//   listType: list | pageList, 
-//   deleteApi: 删除接口, 
-//   listApi: 列表接口, 
+// pageConfig = {
+//   deleteApi: 删除接口,
+//   listApi: 列表接口,
+// 以下为非必填
+//   listType: list(无分页) | pageList(分页)，默认是pageList
 //   defaultParam: 初始的查询参数对象，默认为{}
+//   modifyList: 修改返回列表数据的钩子函数，需要将修改后的数据return
+//   noOnMounted: Boolean, 不自动调用onMounted
+//   handleDelete
+//   handleAdd
+//   handleEdit
+//   handleOk
 // }
 export function usePage(pageConfig) {
-  const { deleteApi } = pageConfig
-
-  const actionModal = ref(null)
   const { dataSource, queryParam, loading, total, handlePageChange, loadData } =
     useLoadData(pageConfig)
+  const { handleAdd, handleEdit, handleOk, handleDelete, actionModal } =
+    useAction(pageConfig, loadData)
 
-  function handleAdd() {
-    actionModal.value.open({ type: 1 })
-  }
-  function handleEdit(record) {
-    actionModal.value.open({ type: 2, record })
-  }
-  function handleOk() {
-    loadData(true)
-  }
-  async function handleDelete(record) {
-    let res = await deleteApi(record)
-    if (res.success) {
-      message.success(res.message)
+  if (!pageConfig.noOnMounted) {
+    onMounted(async () => {
       loadData()
-    }
+    })
   }
-  onMounted(async () => {
-    loadData()
-  })
   return {
     dataSource,
     queryParam,

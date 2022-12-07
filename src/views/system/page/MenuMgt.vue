@@ -1,7 +1,11 @@
 <template>
   <div>菜单列表</div>
   <div class="search-head">
-    <a-button style="margin-right: 10px" @click="handleAdd()" type="primary">
+    <a-button
+      style="margin-right: 10px"
+      @click="handleAdd({ pid: '0' })"
+      type="primary"
+    >
       新增
     </a-button>
     <div style="margin-right: 10px" @keyup.enter="loadData(true)">
@@ -11,20 +15,17 @@
   </div>
   <a-table
     :loading="loading"
-    :pagination="!{
-      pageSize: queryParam.pageSize,
-      current: queryParam.pageNo,
-      total,
-      // showQuickJumper: true,
-      showSizeChanger: true,
-      showTotal: (total) => `共 ${total} 条`,
-    }"
-    
+    :pagination="false"
     :showQuickJumper="true"
     :dataSource="dataSource"
     :columns="columns"
     bordered
     @change="handlePageChange"
+    :expandedRowKeys="expandedRowKeys"
+    @expandedRowsChange="expandedRowsChange"
+    
+    
+    rowKey="id"
   >
     <!-- :scroll="{
       scrollToFirstRowOnChange: true,
@@ -50,9 +51,10 @@
   <menu-action-modal ref="actionModal" @onOk="handleOk"></menu-action-modal>
 </template>
 <script setup>
-import { getMenuListByPid, deleteMenu } from '@/api'
+import { getMenuListByPid, deleteMenu, getMenuTree } from '@/api'
 import { usePage } from '@/utils/composable/usePage'
 import MenuActionModal from '@/views/system/component/MenuActionModal.vue'
+import { ref } from 'vue'
 
 const columns = [
   {
@@ -81,12 +83,14 @@ const columns = [
     dataIndex: 'action',
   },
 ]
-
+const expandedRowKeys = ref([])
+function expandedRowsChange(expandedRows) {
+  expandedRowKeys.value = expandedRows
+}
 const {
   dataSource,
   queryParam,
   loading,
-  total,
   handlePageChange,
   loadData,
   actionModal,
@@ -95,9 +99,10 @@ const {
   handleOk,
   handleDelete,
 } = usePage({
-  listApi: getMenuListByPid,
+  // defaultParam: { pid: 0 },
+  // listApi: getMenuListByPid,
+  listApi: getMenuTree,
   deleteApi: deleteMenu,
-  defaultParam: { pid: 0 },
   listType: 'list',
 })
 </script>

@@ -14,7 +14,7 @@ export function useLoadData(pageConfig) {
 
 // 普通列表
 function useList(pageConfig) {
-  const { listApi, defaultParam = {} } = pageConfig
+  const { listApi, defaultParam = {}, modifyList } = pageConfig
   const dataSource = ref([])
   const queryParam = ref(defaultParam)
   const loading = ref(false)
@@ -25,7 +25,9 @@ function useList(pageConfig) {
       loading.value = false
     })
     let result = res.result
-    console.log(res)
+    if(typeof modifyList === 'function') {
+      result = modifyList(result)
+    }
     dataSource.value = result
   }
   return {
@@ -60,6 +62,9 @@ function usePageList(pageConfig) {
       loading.value = false
     })
     let result = res.result
+    if(typeof modifyList === 'function') {
+      result = modifyList(result)
+    }
     dataSource.value = result.records
     total.value = result.total
 
