@@ -3,13 +3,13 @@ import { defineStore } from 'pinia'
 import { getMenuTree } from '@/api'
 
 export const useMenuStore = defineStore('menu', () => {
-    const menuData = ref([])
+    const menuList = ref([])
     
     const getMenu = async () =>{
       let res = await getMenuTree()
-      menuData.value = res.result
+      menuList.value = res.result
     }
     
 
-  return { menuData, getMenu }
+  return { menuList, getMenu }
 })

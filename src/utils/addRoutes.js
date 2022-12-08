@@ -6,7 +6,7 @@ const pages = import.meta.glob('/src/views/**/page/*.vue')
 export async function addRoutes(router) {
   const menuStore = useMenuStore()
   await menuStore.getMenu()
-  handleRoute(menuStore.menuData, router)
+  handleRoute(menuStore.menuList, router)
   return router
 }
 function handleRoute(list, router) {

@@ -9,7 +9,7 @@ export default {
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const { menuData } = useMenuStore()
+    const { menuList } = useMenuStore()
     const selectedKeysArr = ref([route.meta.id])
 
     // event
@@ -29,7 +29,7 @@ export default {
         return renderSubMenu(menu)
       } else {
         return (
-          <Item id={menu.path} key={menu.id} title={menu.title}>
+          <Item menuDetail={menu} id={menu.path} key={menu.id} title={menu.title}>
             {menu.title}
           </Item>
         )
@@ -46,7 +46,7 @@ export default {
     onMounted(() => {})
     return {
       selectedKeysArr,
-      menuData,
+      menuList,
       handleSelect,
       renderItem,
     }
@@ -61,7 +61,7 @@ export default {
           selectedKeys={this.selectedKeysArr}
           mode='inline'
         >
-          {this.menuData.map((menu) => this.renderItem(menu))}
+          {this.menuList.map((menu) => this.renderItem(menu))}
         </Menu>
       </div>
     )
