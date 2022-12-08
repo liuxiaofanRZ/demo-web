@@ -11,10 +11,8 @@ export default {
     const route = useRoute()
     const { menuList } = useMenuStore()
     const selectedKeysArr = ref([route.meta.id])
-
     // event
-    function handleSelect({ item:{menuDetail}, key, selectedKeys }) {
-      
+    function handleSelect({ item: { menuDetail }, key, selectedKeys }) {
       if (!menuDetail.id) return
       if (menuDetail.isExternal) {
         window.open(menuDetail.path)
@@ -29,7 +27,12 @@ export default {
         return renderSubMenu(menu)
       } else {
         return (
-          <Item menuDetail={menu} id={menu.path} key={menu.id} title={menu.title}>
+          <Item
+            menuDetail={menu}
+            id={menu.path}
+            key={menu.id}
+            title={menu.title}
+          >
             {menu.title}
           </Item>
         )
@@ -42,12 +45,27 @@ export default {
         </SubMenu>
       )
     }
+    // 根据当前页id找到所有父级id，设置默认展开的页面
+    let arr = []
+    getTarget(menuList, route.meta.id)
+    const openKeys = ref(arr)
+    function getTarget(list, targetId) {
+      if (!list || list.length <= 0) return
+      for (let a in list) {
+        let node = list[a]
+        if (node.id === targetId || getTarget(node.children, targetId)) {
+          arr.unshift(node.id)
+          return true
+        }
+      }
+    }
 
     return {
       selectedKeysArr,
       menuList,
       handleSelect,
       renderItem,
+      openKeys,
     }
   },
   render() {
@@ -59,6 +77,7 @@ export default {
           onSelect={this.handleSelect}
           selectedKeys={this.selectedKeysArr}
           mode='inline'
+          openKeys={this.openKeys}
         >
           {this.menuList.map((menu) => this.renderItem(menu))}
         </Menu>
