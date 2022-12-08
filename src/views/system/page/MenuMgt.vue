@@ -1,6 +1,12 @@
 <template>
   <div>菜单列表</div>
-  <div class="search-head">
+  <div class="search-box">
+    <div style="margin-right: 10px" @keyup.enter="loadData(true)">
+      <a-input placeholder="请输入姓名" v-model:value="queryParam.pid" />
+    </div>
+    <a-button @click="loadData(true)">查询</a-button>
+  </div>
+  <div class="action-box">
     <a-button
       style="margin-right: 10px"
       @click="handleAdd({ pid: '0' })"
@@ -8,10 +14,7 @@
     >
       新增
     </a-button>
-    <div style="margin-right: 10px" @keyup.enter="loadData(true)">
-      <a-input placeholder="请输入姓名" v-model:value="queryParam.pid" />
-    </div>
-    <a-button @click="loadData(true)">查询</a-button>
+    <a-button @click="handleBatchDelete">批量删除</a-button>
   </div>
   <a-table
     :loading="loading"
@@ -22,7 +25,11 @@
     @change="handlePageChange"
     :expandedRowKeys="expandedRowKeys"
     @expandedRowsChange="expandedRowsChange"
-    
+    :row-selection="{
+      onChange: handleSelectedRowsChange,
+      selectedRowKeys: selectedRowKeys,
+      preserveSelectedRowKeys: true,
+    }"
     rowKey="id"
   >
     <!-- :scroll="{
@@ -35,12 +42,13 @@
           style="margin-right: 10px"
           size="small"
           @click="handleEdit(record)"
-          >编辑</a-button
         >
+          编辑
+        </a-button>
         <a-button
           style="margin-right: 10px"
           size="small"
-          @click="handleAdd({pid:record.id})"
+          @click="handleAdd({ pid: record.id })"
           >添加子路由</a-button
         >
         <a-popconfirm
@@ -55,10 +63,15 @@
   <menu-action-modal ref="actionModal" @onOk="handleOk"></menu-action-modal>
 </template>
 <script setup>
-import { getMenuListByPid, deleteMenu, getMenuTree } from '@/api'
+import {
+  getMenuListByPid,
+  deleteMenu,
+  getMenuTree,
+  deleteBatchMenu,
+} from '@/api'
 import { usePage } from '@/utils/composable/usePage'
 import MenuActionModal from '@/views/system/component/MenuActionModal.vue'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 const columns = [
   {
@@ -88,6 +101,7 @@ const expandedRowKeys = ref([])
 function expandedRowsChange(expandedRows) {
   expandedRowKeys.value = expandedRows
 }
+
 const {
   dataSource,
   queryParam,
@@ -99,19 +113,27 @@ const {
   handleEdit,
   handleOk,
   handleDelete,
+  selectedRowKeys,
+  handleBatchDelete,
+  handleSelectedRowsChange,
 } = usePage({
   // defaultParam: { pid: 0 },
   // listApi: getMenuListByPid,
   listApi: getMenuTree,
   deleteApi: deleteMenu,
+  deleteBatchApi: deleteBatchMenu,
   listType: 'list',
 })
 </script>
 
 <style>
-.search-head {
+.search-box {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 0;
+  margin-bottom: 10px;
+}
+.action-box {
+  display: flex;
+  margin-bottom: 10px;
 }
 </style>

@@ -1,13 +1,16 @@
 <template>
-  <div>用户列表</div>
-  <div class="search-head">
-    <a-button style="margin-right: 10px" @click="handleAdd()" type="primary">
-      新增
-    </a-button>
+  <div style="margin-bottom: 10px">用户列表</div>
+  <div class="search-box">
     <div style="margin-right: 10px" @keyup.enter="loadData(true)">
       <a-input placeholder="请输入姓名" v-model:value="queryParam.username" />
     </div>
     <a-button @click="loadData(true)">查询</a-button>
+  </div>
+  <div class="action-box">
+    <a-button style="margin-right: 10px" @click="handleAdd" type="primary">
+      新增
+    </a-button>
+    <a-button @click="handleBatchDelete">批量删除</a-button>
   </div>
   <a-table
     :loading="loading"
@@ -19,6 +22,12 @@
       showSizeChanger: true,
       showTotal: (total) => `共 ${total} 条`,
     }"
+    :row-selection="{
+      onChange: handleSelectedRowsChange,
+      selectedRowKeys: selectedRowKeys,
+      preserveSelectedRowKeys: true,
+    }"
+    rowKey="id"
     :showQuickJumper="true"
     :dataSource="dataSource"
     :columns="columns"
@@ -49,7 +58,7 @@
   <user-action-modal ref="actionModal" @onOk="handleOk"></user-action-modal>
 </template>
 <script setup>
-import { getUserList, deleteUser } from '@/api'
+import { getUserList, deleteUser, deleteBatchUser } from '@/api'
 import { usePage } from '@/utils/composable/usePage'
 import UserActionModal from '@/views/system/component/UserActionModal.vue'
 
@@ -83,13 +92,24 @@ const {
   handleEdit,
   handleOk,
   handleDelete,
-} = usePage({ listApi: getUserList, deleteApi: deleteUser })
+  handleBatchDelete,
+  selectedRowKeys,
+  handleSelectedRowsChange,
+} = usePage({
+  listApi: getUserList,
+  deleteApi: deleteUser,
+  deleteBatchApi: deleteBatchUser,
+})
 </script>
 
 <style>
-.search-head {
+.search-box {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 0;
+  margin-bottom: 10px;
+}
+.action-box {
+  display: flex;
+  margin-bottom: 10px;
 }
 </style>

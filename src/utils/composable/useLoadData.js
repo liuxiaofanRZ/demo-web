@@ -2,13 +2,30 @@ import { ref } from 'vue'
 
 export function useLoadData(pageConfig) {
   const { listType = 'pageList' } = pageConfig
+  let returnData = {}
   switch (listType) {
     case 'pageList':
-      return usePageList(pageConfig)
+      returnData = usePageList(pageConfig)
+      break
     case 'list':
-      return useList(pageConfig)
+      returnData = useList(pageConfig)
+      break
     default:
-      return null
+      break
+  }
+  const selectedRowKeys = ref([])
+  const selectedRows = ref([])
+
+  const handleSelectedRowsChange = (rowKeys, rows) => {
+    // console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows)
+    selectedRowKeys.value = rowKeys
+    selectedRows.value = rows
+  }
+  return {
+    ...returnData,
+    handleSelectedRowsChange,
+    selectedRowKeys,
+    selectedRows,
   }
 }
 
@@ -25,7 +42,7 @@ function useList(pageConfig) {
       loading.value = false
     })
     let result = res.result
-    if(typeof modifyList === 'function') {
+    if (typeof modifyList === 'function') {
       result = modifyList(result)
     }
     dataSource.value = result
@@ -52,9 +69,9 @@ function usePageList(pageConfig) {
   async function loadData(isRefresh) {
     if (isRefresh) {
       queryParam.value = {
+        ...queryParam.value,
         pageNo: 1,
         pageSize: 10,
-        ...queryParam.value,
       }
     }
     loading.value = true
@@ -62,7 +79,7 @@ function usePageList(pageConfig) {
       loading.value = false
     })
     let result = res.result
-    if(typeof modifyList === 'function') {
+    if (typeof modifyList === 'function') {
       result = modifyList(result)
     }
     dataSource.value = result.records
