@@ -23,12 +23,14 @@ function handleRoute(list, router) {
         id: menu.id
       }
     }
-    // 错误的path
-    if (!/^\//.test(route.path)) return
-    route.component = pages[`/src/views${menu.component}`]
+    // 处理子路由
     if (menu.children && menu.children.length > 0) {
       handleRoute(menu.children, router)
     }
+    // 错误的path
+    if (!/^\//.test(route.path)) return
+    route.component = pages[`/src/views${menu.component}`]
+
     // 全部添加到name为base的路由下
     router.addRoute('base', route)
   })
