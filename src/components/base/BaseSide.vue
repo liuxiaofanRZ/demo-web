@@ -13,13 +13,13 @@ export default {
     const selectedKeysArr = ref([route.meta.id])
 
     // event
-    function handleSelect({ item, key, selectedKeys }) {
-      console.log(item, selectedKeys)
-      if (!item.id) return
-      if (item.isExternal) {
-        window.open(item.id)
+    function handleSelect({ item:{menuDetail}, key, selectedKeys }) {
+      
+      if (!menuDetail.id) return
+      if (menuDetail.isExternal) {
+        window.open(menuDetail.path)
       } else {
-        router.push(item.id)
+        router.push(menuDetail.path)
         selectedKeysArr.value = selectedKeys
       }
     }
@@ -43,7 +43,6 @@ export default {
       )
     }
 
-    onMounted(() => {})
     return {
       selectedKeysArr,
       menuList,
