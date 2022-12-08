@@ -44,6 +44,9 @@
       <a-form-item label="name" name="name">
         <a-input v-model:value="formState.name" />
       </a-form-item>
+      <a-form-item label="外部路由" name="isExternal">
+        <a-switch v-model:checked="formState.isExternal" />
+      </a-form-item>
     </a-form>
   </a-modal>
 </template>

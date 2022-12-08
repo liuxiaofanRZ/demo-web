@@ -16,7 +16,7 @@ export default {
     function handleSelect({ item, key, selectedKeys }) {
       console.log(item, selectedKeys)
       if (!item.id) return
-      if (item.id.indexOf('http') === 0) {
+      if (item.isExternal) {
         window.open(item.id)
       } else {
         router.push(item.id)
