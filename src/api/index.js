@@ -18,3 +18,18 @@ export const addMenu = (data) => http.post('/menu/add', data)
 export const editMenu = (data) => http.post('/menu/edit', data)
 export const deleteMenu = (data) => http.post('/menu/delete', data)
 export const deleteBatchMenu = (data) => http.post('/menu/deleteBatch', data)
+
+// 平台管理
+export const getPlatformList = (params) => http.get('/platform/list', { params })
+export const getPlatformListAll = (params) => http.get('/platform/listAll', { params })
+export const addPlatform = (data) => http.post('/platform/add', data)
+export const editPlatform = (data) => http.post('/platform/edit', data)
+export const deletePlatform = (data) => http.post('/platform/delete', data)
+export const deleteBatchPlatform = (data) => http.post('/platform/deleteBatch', data)
+
+// 账号管理
+export const getAccountList = (params) => http.get('/account/list', { params })
+export const addAccount = (data) => http.post('/account/add', data)
+export const editAccount = (data) => http.post('/account/edit', data)
+export const deleteAccount = (data) => http.post('/account/delete', data)
+export const deleteBatchAccount = (data) => http.post('/account/deleteBatch', data)
