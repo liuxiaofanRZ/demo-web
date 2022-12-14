@@ -37,7 +37,9 @@ export function useActionModal(addApi, editApi, emit) {
   // opt.type 1新增,2编辑,3详情
   function open(opt) {
     actionOption.value = opt
-    formState.value = Object.assign({}, actionOption.value.record)
+    if (!opt instanceof Event) {
+      formState.value = Object.assign({}, actionOption.value.record)
+    }
     visible.value = true
   }
 
