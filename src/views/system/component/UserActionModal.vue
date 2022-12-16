@@ -1,13 +1,13 @@
 <template>
   <div class="UserActionModal">
-    <a-modal
+    <AModal
       v-model:visible="visible"
       :confirmLoading="confirmLoading"
       title="新增"
       @ok="onOk"
       @cancel="onCancel"
     >
-      <a-form
+      <AForm
         :model="formState"
         :label-col="{ span: 4 }"
         :wrapper-col="{ span: 18 }"
@@ -15,17 +15,17 @@
         :rules="rules"
         ref="formRef"
       >
-        <a-form-item label="用户名" name="username">
-          <a-input v-model:value="formState.username" />
-        </a-form-item>
-        <a-form-item label="密码" name="password">
-          <a-input v-model:value="formState.password" />
-        </a-form-item>
-        <a-form-item label="出生日期" name="birthday">
-          <a-input v-model:value="formState.birthday" />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+        <AFormItem label="用户名" name="username">
+          <AInput v-model:value="formState.username" />
+        </AFormItem>
+        <AFormItem label="密码" name="password">
+          <AInput v-model:value="formState.password" />
+        </AFormItem>
+        <AFormItem label="出生日期" name="birthday">
+          <AInput v-model:value="formState.birthday" />
+        </AFormItem>
+      </AForm>
+    </AModal>
   </div>
 </template>
 

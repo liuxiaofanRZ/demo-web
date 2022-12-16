@@ -1,5 +1,5 @@
 <template>
-  <a-modal
+  <AModal
     class="MenuActionModal"
     v-model:visible="visible"
     :confirmLoading="confirmLoading"
@@ -8,7 +8,7 @@
     @cancel="onCancel"
     destroyOnClose
   >
-    <a-form
+    <AForm
       :model="formState"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
@@ -16,17 +16,17 @@
       :rules="rules"
       ref="formRef"
     >
-      <a-form-item label="标题" name="title">
-        <a-input v-model:value="formState.title" />
-      </a-form-item>
-      <a-form-item label="path" name="path">
-        <a-input v-model:value="formState.path" />
-      </a-form-item>
-      <a-form-item label="pid" name="pid">
-        <a-input disabled v-model:value="formState.pid" />
-      </a-form-item>
-      <a-form-item label="父级菜单" name="pid">
-        <a-tree-select
+      <AFormItem label="标题" name="title">
+        <AInput v-model:value="formState.title" />
+      </AFormItem>
+      <AFormItem label="path" name="path">
+        <AInput v-model:value="formState.path" />
+      </AFormItem>
+      <AFormItem label="pid" name="pid">
+        <AInput disabled v-model:value="formState.pid" />
+      </AFormItem>
+      <AFormItem label="父级菜单" name="pid">
+        <ATreeSelect
           :treeDefaultExpandedKeys="['0']"
           v-model:value="formState.pid"
           style="width: 100%"
@@ -35,20 +35,20 @@
           :fieldNames="{ label: 'title', value: 'id' }"
           :tree-line="{ showLeafIcon: false }"
         >
-        </a-tree-select>
-      </a-form-item>
-      <a-form-item label="component" name="component">
-        <a-input v-model:value="formState.component" />
-      </a-form-item>
+        </ATreeSelect>
+      </AFormItem>
+      <AFormItem label="component" name="component">
+        <AInput v-model:value="formState.component" />
+      </AFormItem>
 
-      <a-form-item label="name" name="name">
-        <a-input v-model:value="formState.name" />
-      </a-form-item>
-      <a-form-item label="外部路由" name="isExternal">
-        <a-switch v-model:checked="formState.isExternal" />
-      </a-form-item>
-    </a-form>
-  </a-modal>
+      <AFormItem label="name" name="name">
+        <AInput v-model:value="formState.name" />
+      </AFormItem>
+      <AFormItem label="外部路由" name="isExternal">
+        <ASwitch v-model:checked="formState.isExternal" />
+      </AFormItem>
+    </AForm>
+  </AModal>
 </template>
 
 <script setup>

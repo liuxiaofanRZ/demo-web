@@ -1,5 +1,4 @@
 <script setup>
-import BaseLayout from './components/base/BaseLayout.vue'
 import { RouterView } from 'vue-router'
 import { ref } from 'vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
@@ -10,7 +9,7 @@ const componentSize = ref('middle')
 </script>
 
 <template>
-  <a-config-provider :component-size="componentSize" :locale="zhCN">
+  <AConfigProvider :component-size="componentSize" :locale="zhCN">
     <RouterView />
-  </a-config-provider>
+  </AConfigProvider>
 </template>

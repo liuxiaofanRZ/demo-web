@@ -2,21 +2,21 @@
   <div>菜单列表</div>
   <div class="search-box">
     <div style="margin-right: 10px" @keyup.enter="loadData(true)">
-      <a-input placeholder="请输入姓名" v-model:value="queryParam.pid" />
+      <AInput placeholder="请输入姓名" v-model:value="queryParam.pid" />
     </div>
-    <a-button @click="loadData(true)">查询</a-button>
+    <AButton @click="loadData(true)">查询</AButton>
   </div>
   <div class="action-box">
-    <a-button
+    <AButton
       style="margin-right: 10px"
       @click="handleAdd({ pid: '0' })"
       type="primary"
     >
       新增
-    </a-button>
-    <a-button @click="handleBatchDelete">批量删除</a-button>
+    </AButton>
+    <AButton @click="handleBatchDelete">批量删除</AButton>
   </div>
-  <a-table
+  <ATable
     :loading="loading"
     :pagination="false"
     :showQuickJumper="true"
@@ -38,29 +38,26 @@
     }" -->
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'action'">
-        <a-button
+        <AButton
           style="margin-right: 10px"
           size="small"
           @click="handleEdit(record)"
         >
           编辑
-        </a-button>
-        <a-button
+        </AButton>
+        <AButton
           style="margin-right: 10px"
           size="small"
           @click="handleAdd({ pid: record.id })"
-          >添加子路由</a-button
+          >添加子路由</AButton
         >
-        <a-popconfirm
-          title="确定删除这条数据？"
-          @confirm="handleDelete(record)"
-        >
-          <a-button size="small" type="danger">删除</a-button>
-        </a-popconfirm>
+        <APopconfirm title="确定删除这条数据？" @confirm="handleDelete(record)">
+          <AButton size="small" type="danger">删除</AButton>
+        </APopconfirm>
       </template>
     </template>
-  </a-table>
-  <menu-action-modal ref="actionModal" @onOk="handleOk"></menu-action-modal>
+  </ATable>
+  <MenuActionModal ref="actionModal" @onOk="handleOk"></MenuActionModal>
 </template>
 <script setup>
 import {

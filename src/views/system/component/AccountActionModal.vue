@@ -1,13 +1,13 @@
 <template>
   <div class="AccountActionModal">
-    <a-modal
+    <AModal
       v-model:visible="visible"
       :confirmLoading="confirmLoading"
       title="新增"
       @ok="onOk"
       @cancel="onCancel"
     >
-      <a-form
+      <AForm
         @keyup.enter="onOk"
         :model="formState"
         :label-col="{ span: 4 }"
@@ -16,35 +16,29 @@
         :rules="rules"
         ref="formRef"
       >
-        <a-form-item label="账号" name="username">
-          <a-input
-            placeholder="请输入账号"
-            v-model:value="formState.username"
-          />
-        </a-form-item>
-        <a-form-item label="密码" name="password">
-          <a-input
-            placeholder="请输入密码"
-            v-model:value="formState.password"
-          />
-        </a-form-item>
-        <a-form-item label="平台" name="platformId">
+        <AFormItem label="账号" name="username">
+          <AInput placeholder="请输入账号" v-model:value="formState.username" />
+        </AFormItem>
+        <AFormItem label="密码" name="password">
+          <AInput placeholder="请输入密码" v-model:value="formState.password" />
+        </AFormItem>
+        <AFormItem label="平台" name="platformId">
           <!-- <a-input v-model:value="formState.platformId" /> -->
-          <a-select
+          <ASelect
             placeholder="请选择平台"
             v-model:value="formState.platformId"
             :fieldNames="{ label: 'title', value: 'id' }"
             :options="platformList"
-          ></a-select>
-        </a-form-item>
-        <a-form-item label="描述" name="description">
-          <a-input
+          ></ASelect>
+        </AFormItem>
+        <AFormItem label="描述" name="description">
+          <AInput
             placeholder="请输入描述"
             v-model:value="formState.description"
           />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+        </AFormItem>
+      </AForm>
+    </AModal>
   </div>
 </template>
 

@@ -2,17 +2,17 @@
   <div style="margin-bottom: 10px">用户列表</div>
   <div class="search-box">
     <div style="margin-right: 10px" @keyup.enter="loadData(true)">
-      <a-input placeholder="请输入姓名" v-model:value="queryParam.username" />
+      <AInput placeholder="请输入姓名" v-model:value="queryParam.username" />
     </div>
-    <a-button @click="loadData(true)">查询</a-button>
+    <AButton @click="loadData(true)">查询</AButton>
   </div>
   <div class="action-box">
-    <a-button style="margin-right: 10px" @click="handleAdd" type="primary">
+    <AButton style="margin-right: 10px" @click="handleAdd" type="primary">
       新增
-    </a-button>
-    <a-button @click="handleBatchDelete">批量删除</a-button>
+    </AButton>
+    <AButton @click="handleBatchDelete">批量删除</AButton>
   </div>
-  <a-table
+  <ATable
     :loading="loading"
     :pagination="{
       pageSize: queryParam.pageSize,
@@ -40,22 +40,19 @@
     }" -->
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'action'">
-        <a-button
+        <AButton
           style="margin-right: 10px"
           size="small"
           @click="handleEdit(record)"
-          >编辑</a-button
+          >编辑</AButton
         >
-        <a-popconfirm
-          title="确定删除这条数据？"
-          @confirm="handleDelete(record)"
-        >
-          <a-button size="small" type="danger">删除</a-button>
-        </a-popconfirm>
+        <APopconfirm title="确定删除这条数据？" @confirm="handleDelete(record)">
+          <AButton size="small" type="danger">删除</AButton>
+        </APopconfirm>
       </template>
     </template>
-  </a-table>
-  <user-action-modal ref="actionModal" @onOk="handleOk"></user-action-modal>
+  </ATable>
+  <UserActionModal ref="actionModal" @onOk="handleOk"></UserActionModal>
 </template>
 <script setup>
 import { getUserList, deleteUser, deleteBatchUser } from '@/api'

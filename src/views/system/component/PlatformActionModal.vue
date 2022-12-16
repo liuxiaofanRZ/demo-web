@@ -1,13 +1,13 @@
 <template>
   <div class="PlatformActionModal">
-    <a-modal
+    <AModal
       v-model:visible="visible"
       :confirmLoading="confirmLoading"
       title="新增"
       @ok="onOk"
       @cancel="onCancel"
     >
-      <a-form
+      <AForm
         :model="formState"
         :label-col="{ span: 4 }"
         :wrapper-col="{ span: 18 }"
@@ -15,14 +15,14 @@
         :rules="rules"
         ref="formRef"
       >
-        <a-form-item label="平台名称" name="title">
-          <a-input v-model:value="formState.title" />
-        </a-form-item>
-        <a-form-item label="url" name="url">
-          <a-input v-model:value="formState.url" />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+        <AFormItem label="平台名称" name="title">
+          <AInput v-model:value="formState.title" />
+        </AFormItem>
+        <AFormItem label="url" name="url">
+          <AInput v-model:value="formState.url" />
+        </AFormItem>
+      </AForm>
+    </AModal>
   </div>
 </template>
 
