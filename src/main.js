@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 // mock
-import '../mock'
+// import '../mock'
 // 全局样式
 import './assets/main.css'
 // antd

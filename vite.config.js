@@ -8,12 +8,15 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {},
+  base: '/demo',
+  build: {
+    outDir:"./demo"
+  },
   plugins: [
     vue(),
     vueJsx(),
     viteCompression({
-      threshold: 512000,
+      threshold: 32000,
     }),
   ],
   resolve: {
