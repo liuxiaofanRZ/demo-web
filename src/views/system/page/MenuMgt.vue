@@ -63,15 +63,10 @@
   <menu-action-modal ref="actionModal" @onOk="handleOk"></menu-action-modal>
 </template>
 <script setup>
-import {
-  getMenuListByPid,
-  deleteMenu,
-  getMenuTree,
-  deleteBatchMenu,
-} from '@/api'
+import { deleteBatchMenu, deleteMenu, getMenuTree } from '@/api'
 import { usePage } from '@/utils/composable/usePage'
 import MenuActionModal from '@/views/system/component/MenuActionModal.vue'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 const columns = [
   {
