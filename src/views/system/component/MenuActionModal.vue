@@ -64,12 +64,12 @@ const rules = {
       message: '请输入菜单标题！',
     },
   ],
-  // path: [
-  //   {
-  //     required: true,
-  //     message: '请输入菜单路径！',
-  //   },
-  // ],
+  path: [
+    {
+      required: true,
+      message: '请输入菜单路径！',
+    },
+  ],
   // name: [
   //   {
   //     required: true,

@@ -23,6 +23,8 @@ function handleRoute(list, router, parentName) {
         id: menu.id,
       },
     }
+    if(!menu.path) return 
+
     // 设置路由组件
     route.component = pages[`/src/views${menu.component}`] || RouterView
     // 添加路由
