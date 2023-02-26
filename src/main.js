@@ -1,3 +1,4 @@
+import "./main.css" // 首先引入taiwind样式，以防覆盖其他库，如antdv的样式
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
