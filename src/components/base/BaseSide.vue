@@ -1,6 +1,7 @@
 <script lang="jsx">
 import { useMenuStore } from '@/stores/menu'
 import { Menu } from 'ant-design-vue'
+import 'ant-design-vue/es/menu/style/index.css'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const { SubMenu, Item } = Menu
