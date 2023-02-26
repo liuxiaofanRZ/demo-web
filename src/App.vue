@@ -1,5 +1,4 @@
 <script setup>
-import BaseLayout from './components/base/BaseLayout.vue'
 import { RouterView } from 'vue-router'
 import { ref } from 'vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
