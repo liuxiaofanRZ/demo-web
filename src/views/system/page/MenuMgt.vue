@@ -1,6 +1,6 @@
 <template>
-  <div>菜单列表</div>
-  <div class="search-box">
+  <div class="text-3xl text-red-500">菜单列表</div>
+  <div class="search-box flex justify-end mb-3">
     <div style="margin-right: 10px" @keyup.enter="loadData(true)">
       <a-input placeholder="请输入姓名" v-model:value="queryParam.pid" />
     </div>
@@ -122,6 +122,7 @@ const {
 </script>
 
 <style>
+
 .search-box {
   display: flex;
   justify-content: flex-end;

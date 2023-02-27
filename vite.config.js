@@ -9,7 +9,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // 按需加载
 import Components from 'unplugin-vue-components/vite'
 // 按需加载antdv
-import {AntDesignVueResolver} from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,9 +18,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
     Components({
-      resolvers: [
-        AntDesignVueResolver(),
-      ],
+      resolvers: [AntDesignVueResolver()],
     }),
     // viteCompression({
     //   threshold: 512000,
