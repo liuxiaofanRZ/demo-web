@@ -28,7 +28,7 @@ const router = createRouter({
 })
 // 动态路由添加标志
 let dynamicRoutesFlag = false
-router.beforeResolve(async (to, from) => {
+router.beforeEach(async (to) => {
   if (dynamicRoutesFlag) {
     return true
   } else {

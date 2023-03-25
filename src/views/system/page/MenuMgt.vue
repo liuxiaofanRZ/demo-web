@@ -1,6 +1,6 @@
 <template>
-  <div>菜单列表</div>
-  <div class="search-box">
+  <div class="text-3xl text-red-500">菜单列表</div>
+  <div class="search-box flex justify-end mb-3">
     <div style="margin-right: 10px" @keyup.enter="loadData(true)">
       <AInput placeholder="请输入姓名" v-model:value="queryParam.pid" />
     </div>
@@ -60,15 +60,10 @@
   <MenuActionModal ref="actionModal" @onOk="handleOk"></MenuActionModal>
 </template>
 <script setup>
-import {
-  getMenuListByPid,
-  deleteMenu,
-  getMenuTree,
-  deleteBatchMenu,
-} from '@/api'
+import { deleteBatchMenu, deleteMenu, getMenuTree } from '@/api'
 import { usePage } from '@/utils/composable/usePage'
 import MenuActionModal from '@/views/system/component/MenuActionModal.vue'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 const columns = [
   {
@@ -124,6 +119,7 @@ const {
 </script>
 
 <style>
+
 .search-box {
   display: flex;
   justify-content: flex-end;
