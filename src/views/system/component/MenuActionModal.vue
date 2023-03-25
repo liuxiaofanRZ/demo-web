@@ -35,10 +35,10 @@
           :fieldNames="{ label: 'title', value: 'id' }"
           :tree-line="{ showLeafIcon: false }"
         >
-        </a-tree-select>
-      </a-form-item>
-      <a-form-item label="component" name="component">
-        <a-input
+        </ATreeSelect>
+      </AFormItem>
+      <AFormItem label="component" name="component">
+        <AInput
           v-model:value="formState.component"
           placeholder="不填时默认设置为RouterView"
         />
@@ -47,16 +47,16 @@
           <div>2. 前缀路径为 /src/views，即 /src/views/system/page/menu.vue</div>
           <div>3. vue 文件必须放置到名为 page 的目录下，见 addRoutes.js文件</div>
         </div>
-      </a-form-item>
+      </AFormItem>
 
-      <a-form-item label="name" name="name">
-        <a-input v-model:value="formState.name" placeholder="独一无二的名字" />
-      </a-form-item>
-      <a-form-item label="外部路由" name="isExternal">
-        <a-switch v-model:checked="formState.isExternal" />
-      </a-form-item>
-    </a-form>
-  </a-modal>
+      <AFormItem label="name" name="name">
+        <AInput v-model:value="formState.name" placeholder="独一无二的名字" />
+      </AFormItem>
+      <AFormItem label="外部路由" name="isExternal">
+        <ASwitch v-model:checked="formState.isExternal" />
+      </AFormItem>
+    </AForm>
+  </AModal>
 </template>
 
 <script setup>
