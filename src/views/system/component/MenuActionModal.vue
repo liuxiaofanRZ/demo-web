@@ -22,6 +22,9 @@
       <AFormItem label="path" name="path">
         <AInput v-model:value="formState.path" />
       </AFormItem>
+      <AFormItem label="排序" name="order">
+        <AInputNumber step="10" style="width: 100%;" v-model:value="formState.order" defaultValue="0" placeholder="请输入排序" />
+      </AFormItem>
       <AFormItem label="pid" name="pid">
         <AInput disabled v-model:value="formState.pid" />
       </AFormItem>
@@ -49,11 +52,12 @@
         </div>
       </AFormItem>
 
-      <AFormItem label="name" name="name">
-        <AInput v-model:value="formState.name" placeholder="独一无二的名字" />
-      </AFormItem>
+
       <AFormItem label="外部路由" name="isExternal">
         <ASwitch v-model:checked="formState.isExternal" />
+      </AFormItem>
+      <AFormItem label="新页面" name="isNewPage">
+        <ASwitch v-model:checked="formState.isNewPage" />
       </AFormItem>
     </AForm>
   </AModal>
@@ -78,12 +82,12 @@ const rules = {
       message: '请输入菜单路径！',
     },
   ],
-  // name: [
-  //   {
-  //     required: true,
-  //     message: '请输入菜单名称！',
-  //   },
-  // ],
+  order: [
+    {
+      required: true,
+      message: '请输入排序！',
+    },
+  ],
   // component: [
   //   {
   //     required: true,

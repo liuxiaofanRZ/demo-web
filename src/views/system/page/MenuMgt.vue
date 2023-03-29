@@ -80,8 +80,8 @@ const columns = [
     dataIndex: 'component',
   },
   {
-    title: 'name',
-    dataIndex: 'name',
+    title: '排序',
+    dataIndex: 'order',
   },
   {
     title: '操作',

@@ -24,7 +24,14 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response) => {
     let data = response.data
-    return data
+    if(data&&data.success) {
+      // 这样写不合适，data不总是{success:true,result:{}}这样统一规范的对象。
+      // return data.result 
+      return data
+    } else {
+      message.error(data.message)
+      return Promise.reject(data.message)
+    }
   },
   (err) => {
     if (err.code === 'ECONNABORTED') {
