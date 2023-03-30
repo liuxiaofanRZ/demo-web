@@ -83,7 +83,11 @@ const {
   onCancel,
   onOk,
   open: _open,
-} = useActionModal(addAccount, editAccount, emit)
+} = useActionModal({
+  addApi: addAccount,
+  editApi: editAccount,
+  onSuccess: () => emit('onOk'),
+})
 const platformList = ref([])
 defineExpose({
   open: async (record) => {

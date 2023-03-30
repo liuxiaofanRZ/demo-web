@@ -53,7 +53,11 @@ const rules = {
 }
 
 const { formRef, visible, confirmLoading, formState, onCancel, onOk, open } =
-  useActionModal(addPlatform, editPlatform, emit)
+  useActionModal({
+    addApi: addPlatform,
+    editApi: editPlatform,
+    onSuccess: () => emit('onOk'),
+  })
 
 defineExpose({
   open,

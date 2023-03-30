@@ -1,7 +1,7 @@
 import { message } from 'ant-design-vue'
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 
-export function useActionModal(addApi, editApi, emit) {
+export function useActionModal({ addApi, editApi, onSuccess, defaultFormState }) {
   const actionOption = ref({}) // open 参数
   const formRef = ref(null)
   const visible = ref(false)
@@ -11,16 +11,17 @@ export function useActionModal(addApi, editApi, emit) {
   function onCancel() {
     formRef.value.clearValidate()
   }
-  async function onOk() {
+
+  async function submitForm(type) {
     let values = await formRef.value.validate().catch(() => null)
     if (!values) return
     confirmLoading.value = true
     let requestMethod
-    if (actionOption.value.type === 1) {
+    if (type === 1) {
       requestMethod = addApi
-    } else if (actionOption.value.type === 2) {
+    } else if (type === 2) {
       requestMethod = editApi
-    } else if (actionOption.value.type === 3) {
+    } else if (type === 3) {
     }
     if (!requestMethod) return
     let res = await requestMethod(formState.value).finally(() => {
@@ -29,17 +30,25 @@ export function useActionModal(addApi, editApi, emit) {
     if (res.success) {
       visible.value = false
       message.success(res.message)
-      emit('onOk')
+      onSuccess && onSuccess()
     } else {
       message.error(res.message)
     }
   }
+  async function onOk() {
+    submitForm(actionOption.value)
+  }
+  function reset() {
+    formState.value = Object.assign(
+      {},
+      defaultFormState,
+      actionOption.value.record
+    )
+  }
   // opt.type 1新增,2编辑,3详情
   function open(opt) {
     actionOption.value = opt
-    if (!(opt instanceof Event)) {
-      formState.value = Object.assign({}, actionOption.value.record)
-    }
+    reset()
     visible.value = true
   }
 
@@ -52,5 +61,7 @@ export function useActionModal(addApi, editApi, emit) {
     onCancel,
     onOk,
     open,
+    submitForm,
+    reset,
   }
 }

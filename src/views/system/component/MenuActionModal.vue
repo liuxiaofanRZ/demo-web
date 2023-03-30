@@ -6,7 +6,6 @@
     title="新增"
     @ok="onOk"
     @cancel="onCancel"
-    destroyOnClose
   >
     <AForm
       :model="formState"
@@ -23,7 +22,12 @@
         <AInput v-model:value="formState.path" />
       </AFormItem>
       <AFormItem label="排序" name="order">
-        <AInputNumber step="10" style="width: 100%;" v-model:value="formState.order" defaultValue="0" placeholder="请输入排序" />
+        <AInputNumber
+          step="10"
+          style="width: 100%"
+          v-model:value="formState.order"
+          placeholder="请输入排序"
+        />
       </AFormItem>
       <AFormItem label="pid" name="pid">
         <AInput disabled v-model:value="formState.pid" />
@@ -47,11 +51,14 @@
         />
         <div class="mx-0 break-all text-neutral-500">
           <div>1. 例：/system/page/menu.vue</div>
-          <div>2. 前缀路径为 /src/views，即 /src/views/system/page/menu.vue</div>
-          <div>3. vue 文件必须放置到名为 page 的目录下，见 addRoutes.js文件</div>
+          <div>
+            2. 前缀路径为 /src/views，即 /src/views/system/page/menu.vue
+          </div>
+          <div>
+            3. vue 文件必须放置到名为 page 的目录下，见 addRoutes.js文件
+          </div>
         </div>
       </AFormItem>
-
 
       <AFormItem label="外部路由" name="isExternal">
         <ASwitch v-model:checked="formState.isExternal" />
@@ -101,7 +108,6 @@ const rules = {
   //   },
   // ],
 }
-
 const {
   formRef,
   visible,
@@ -110,8 +116,13 @@ const {
   onCancel,
   onOk,
   open: _open,
-} = useActionModal(addMenu, editMenu, emit)
-
+  reset,
+} = useActionModal({
+  addApi: addMenu,
+  editApi: editMenu,
+  onSuccess: () => emit('onOk'),
+  defaultFormState: { order: 11 },
+})
 const treeData = ref([])
 defineExpose({
   open: async (record) => {
