@@ -66,7 +66,6 @@ async function addRoutes() {
 let dynamicRoutesFlag = false
 router.beforeEach(async (to) => {
   if (dynamicRoutesFlag) {
-    console.log(to);
     return true
   } else {
     await addRoutes(router)
