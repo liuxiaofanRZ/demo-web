@@ -1,5 +1,8 @@
 <template>
-  <ACard :bordered="false">
+  <ACard title="TODO LIST" :bordered="false">
+    <template #extra>
+      <a-typography-text type="danger"> 需求是逻辑的前提！ </a-typography-text>
+    </template>
     <AForm :model="formState" ref="formRef">
       <ARow :gutter="20">
         <ACol :xs="24" :sm="8">
@@ -18,12 +21,13 @@
         </ACol>
       </ARow>
 
-      <AFormItem>
-        <AButton type="primary" @click="submitForm(1)">Submit</AButton>
+      <AFormItem style="text-align: right;">
+        <ASpace >
+          <AButton @click="reset()">重置</AButton>
+          <AButton type="primary" @click="submitForm(1)">添加</AButton>
+        </ASpace>
       </AFormItem>
     </AForm>
-  </ACard>
-  <ACard title="列表" :bordered="false" style="margin-top: 20px">
     <ATable
       :columns="columns"
       :dataSource="dataSource"
@@ -106,13 +110,14 @@ const columns = [
     dataIndex: 'action',
   },
 ]
-const { formRef, confirmLoading, formState, submitForm,reset } = useActionModal({
-  addApi: addSysTask,
-  editApi: editSysTask,
-  onSuccess: () => {
-    loadData()
-    reset()
-  },
-})
+const { formRef, confirmLoading, formState, submitForm, reset } =
+  useActionModal({
+    addApi: addSysTask,
+    editApi: editSysTask,
+    onSuccess: () => {
+      loadData()
+      reset()
+    },
+  })
 </script>
 <style lang="scss"></style>
