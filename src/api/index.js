@@ -33,3 +33,10 @@ export const addAccount = (data) => http.post('/account/add', data)
 export const editAccount = (data) => http.post('/account/edit', data)
 export const deleteAccount = (data) => http.post('/account/delete', data)
 export const deleteBatchAccount = (data) => http.post('/account/deleteBatch', data)
+
+// 任务管理
+export const getSysTaskList = (params) => http.get('/sysTask/list', { params })
+export const addSysTask = (data) => http.post('/sysTask/add', data)
+export const editSysTask = (data) => http.post('/sysTask/edit', data)
+export const deleteSysTask = (data) => http.post('/sysTask/delete', data)
+export const deleteBatchSysTask = (data) => http.post('/sysTask/deleteBatch', data)
