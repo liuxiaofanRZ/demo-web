@@ -70,19 +70,15 @@ export default {
     }
   },
   render() {
-    // return
     return (
-      <div class='base-side'>
-        <Menu
-          style='height: 100%;'
-          onSelect={this.handleSelect}
-          selectedKeys={this.selectedKeysArr}
-          mode='inline'
-          openKeys={this.openKeys}
-        >
-          {this.menuList.map((menu) => this.renderItem(menu))}
-        </Menu>
-      </div>
+      <Menu
+        onSelect={this.handleSelect}
+        selectedKeys={this.selectedKeysArr}
+        mode='inline'
+        openKeys={this.openKeys}
+      >
+        {this.menuList.map((menu) => this.renderItem(menu))}
+      </Menu>
     )
   },
 }

@@ -1,37 +1,43 @@
 <template>
-  <BaseHeader />
-  <div class="base-container">
-    <BaseSide />
-    <BaseContent />
-  </div>
+  <a-layout class="base-container">
+    <a-layout-header class="base-header">Header</a-layout-header>
+    <a-layout>
+      <a-layout-sider class="base-sider" theme="light">
+        <SideMenu></SideMenu>
+      </a-layout-sider>
+      <a-layout-content class="base-content">
+        <RouterView />
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
 </template>
 
-<script setup>
-import BaseHeader from './BaseHeader.vue'
-import BaseSide from './BaseSide.vue'
-import BaseContent from './BaseContent.vue'
-</script>
-
 <style lang="less">
-.base-header {
-  z-index: 20;
-  height: 60px;
-  box-shadow: 0 1px 2px 0 var(--cb-color-shadow, rgba(0, 0, 0, 0.1));
-  position: relative;
-}
+@headerHeight: 64px;
 .base-container {
-  height: calc(100vh - 60px);
-  display: flex;
+  min-height: 100vh;
 }
-.base-side {
-  overflow-y: auto;
-  height: 100%;
-  width: 220px;
+.base-header {
+  box-shadow: 0 1px 2px 0 var(--cb-color-shadow, rgba(0, 0, 0, 0.1));
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
-  // border-right: 1px solid #c0c6cc;
+}
+
+.base-sider {
+  overflow: auto;
+  height: calc(100vh - @headerHeight);
+  position: fixed;
+  top: @headerHeight;
+  left: 0;
+  bottom: 0;
 }
 .base-content {
-  padding: 20px 20px 20px;
+  margin-left: 200px;
+  padding: (@headerHeight + 20) 20px 20px;
   flex: 1;
   height: 100%;
   overflow-y: auto;
