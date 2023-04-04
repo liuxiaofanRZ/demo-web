@@ -36,7 +36,7 @@ export function useActionModal({ addApi, editApi, onSuccess, defaultFormState })
     }
   }
   async function onOk() {
-    submitForm(actionOption.value)
+    submitForm(actionOption.value.type)
   }
   function reset() {
     formState.value = Object.assign(
