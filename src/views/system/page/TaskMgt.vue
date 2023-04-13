@@ -5,7 +5,7 @@
     </template>
     <AForm :model="formState" ref="formRef">
       <ARow :gutter="20">
-        <ACol :xs="24" :sm="8">
+        <ACol :span="24" :md="8">
           <AFormItem
             label="任务名称"
             name="title"
@@ -14,7 +14,7 @@
             <AInput v-model:value="formState.title" />
           </AFormItem>
         </ACol>
-        <ACol :xs="24" :sm="16">
+        <ACol :span="24" :md="16">
           <AFormItem label="详情" name="desc">
             <AInput v-model:value="formState.desc" />
           </AFormItem>

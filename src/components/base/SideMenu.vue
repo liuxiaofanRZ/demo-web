@@ -72,6 +72,7 @@ export default {
   render() {
     return (
       <Menu
+        class='side-menu'
         onSelect={this.handleSelect}
         selectedKeys={this.selectedKeysArr}
         mode='inline'

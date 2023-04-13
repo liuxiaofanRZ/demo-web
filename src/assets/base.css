@@ -21,6 +21,7 @@
 /*滚动条整体部分,必须要设置*/
 ::-webkit-scrollbar{
   width: 6px;
+  height: 6px;
   /* background-color: transparent; */
   /* background-color: #f5f5f5; */
 }
@@ -37,6 +38,7 @@
 /*滚动条的上下两端的按钮*/
 ::-webkit-scrollbar-button{
   height: 0;
+  width: 0;
   background-color: #ccc;
 }
  
