@@ -2,15 +2,23 @@
 import { useMenuStore } from '@/stores/menu'
 import { Menu } from 'ant-design-vue'
 import 'ant-design-vue/es/menu/style/index.css'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const { SubMenu, Item } = Menu
+import { useMainStore } from '@/stores/main'
+import { storeToRefs } from 'pinia'
+// import { MailOutlined } from '@ant-design/icons-vue'
+import 'ant-design-vue/es/tooltip/style/css'
+
 export default {
   name: 'sideMenu',
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const { menuList } = useMenuStore()
+    const menuStore = useMenuStore()
+    const { menuList } = storeToRefs(menuStore)
+    const mainStore = useMainStore()
+    const { collapsed } = storeToRefs(mainStore)
     const selectedKeysArr = ref([route.meta.id])
     // event
     function handleSelect({ item: { menuDetail }, key, selectedKeys }) {
@@ -34,7 +42,10 @@ export default {
             key={menu.id}
             title={menu.title}
           >
-            {menu.title}
+            {{
+              default: () => menu.title,
+              /* icon: () => <MailOutlined />, */
+            }}
           </Item>
         )
       }
@@ -42,13 +53,16 @@ export default {
     function renderSubMenu(menu) {
       return (
         <SubMenu id={menu.path} key={menu.id} title={menu.title}>
-          {menu.children.map((subMenu) => renderItem(subMenu))}
+          {{
+            default: () => menu.children.map((subMenu) => renderItem(subMenu)),
+            /* icon: () => <MailOutlined />, */
+          }}
         </SubMenu>
       )
     }
     // 根据当前页id找到所有父级id，设置默认展开的页面
     let arr = []
-    getTarget(menuList, route.meta.id)
+    getTarget(menuList.value, route.meta.id)
     const openKeys = ref(arr)
     function getTarget(list, targetId) {
       if (!list || list.length <= 0) return
@@ -61,24 +75,15 @@ export default {
       }
     }
 
-    return {
-      selectedKeysArr,
-      menuList,
-      handleSelect,
-      renderItem,
-      openKeys,
-    }
-  },
-  render() {
-    return (
+    return () => (
       <Menu
         class='side-menu'
-        onSelect={this.handleSelect}
-        selectedKeys={this.selectedKeysArr}
+        onSelect={handleSelect}
+        selectedKeys={selectedKeysArr.value}
         mode='inline'
-        openKeys={this.openKeys}
+        openKeys={collapsed.value ? [] : openKeys.value}
       >
-        {this.menuList.map((menu) => this.renderItem(menu))}
+        {menuList.value.map((menu) => renderItem(menu))}
       </Menu>
     )
   },
