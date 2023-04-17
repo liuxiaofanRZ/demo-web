@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import viteCompression from 'vite-plugin-compression'
+import Unocss from 'unocss/vite'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -18,6 +19,7 @@ export default defineConfig({
     outDir:"./demo"
   },
   plugins: [
+    Unocss({ /* options */ }),
     vue(),
     vueJsx(),
     Components({

@@ -19,5 +19,12 @@ export const useMainStore = defineStore('main', () => {
   const isDesktop = computed(() => deviceType.value === EnumDeviceType.desktop)
   const isMobile = computed(() => deviceType.value === EnumDeviceType.mobile)
 
-  return { collapsed, setCollapsed, setDeviceType, isDesktop, isMobile }
+  return {
+    collapsed,
+    deviceType,
+    setCollapsed,
+    setDeviceType,
+    isDesktop,
+    isMobile,
+  }
 })

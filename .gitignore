@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 demo
+src/views/practice/videos/data/SampleVideo_1280x720_30mb.mp4
