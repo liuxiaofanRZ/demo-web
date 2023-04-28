@@ -5,6 +5,7 @@
     "node": ">=16.0"
   },
   "scripts": {
+    "pre": "pnpm i",
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",

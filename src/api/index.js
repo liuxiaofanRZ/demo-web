@@ -8,6 +8,7 @@ export const addUser = (data) => http.post('/user/add', data)
 export const editUser = (data) => http.post('/user/edit', data)
 export const deleteUser = (data) => http.post('/user/delete', data)
 export const deleteBatchUser = (data) => http.post('/user/deleteBatch', data)
+export const userRegister = (data)=> http.post('/user/register',data)
 
 // 菜单管理
 export const getMenuList = (params) => http.get('/menu/list', { params })

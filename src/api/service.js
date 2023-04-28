@@ -38,6 +38,8 @@ http.interceptors.response.use(
       message.error('请求超时')
     } else if (err.code === 'ERR_NETWORK') {
       message.error('网络错误')
+    } else {
+      console.log('其他错误');
     }
     return Promise.reject(err)
   }
