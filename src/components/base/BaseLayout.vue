@@ -18,7 +18,7 @@
         class="base-sider"
         theme="light"
       >
-        <div class="base-title">demo</div>
+        <div class="base-title">demo1</div>
         <SideMenu></SideMenu>
       </a-layout-sider>
       <a-layout-sider

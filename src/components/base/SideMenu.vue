@@ -74,13 +74,20 @@ export default {
         }
       }
     }
+    function onOpenChange(v) {
+      if (collapsed.value) {
+      } else {
+        openKeys.value = v
+      }
+    }
 
     return () => (
       <Menu
         class='side-menu'
+        mode='inline'
         onSelect={handleSelect}
         selectedKeys={selectedKeysArr.value}
-        mode='inline'
+        onOpenChange={onOpenChange}
         openKeys={collapsed.value ? [] : openKeys.value}
       >
         {menuList.value.map((menu) => renderItem(menu))}
