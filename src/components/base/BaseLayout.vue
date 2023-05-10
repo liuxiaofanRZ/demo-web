@@ -1,7 +1,8 @@
 <template>
   <a-layout class="base-container" @click="handleMobileCollapsed">
     <a-layout-header class="base-header">
-      <div style="font-size: 20px">
+      <div class="text-20px px-20px">
+        <img class="w-40px mr-30px" src="@/assets/logo.svg" alt="">
         <menu-unfold-outlined
           @click.stop="setCollapsed(false)"
           v-if="collapsed"
