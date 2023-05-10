@@ -33,7 +33,6 @@
 import { addUser, editUser } from '@/api'
 import { useActionModal } from '@/utils/composable/useActionModal'
 const emit = defineEmits(['onOk'])
-
 const rules = {
   username: [
     {
@@ -56,7 +55,11 @@ const rules = {
 }
 
 const { formRef, visible, confirmLoading, formState, onCancel, onOk, open } =
-  useActionModal(addUser, editUser, emit)
+  useActionModal({
+    addApi: addUser,
+    editApi: editUser,
+    onSuccess: () => emit('onOk'),
+  })
 
 defineExpose({
   open,

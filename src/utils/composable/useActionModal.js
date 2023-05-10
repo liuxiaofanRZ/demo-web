@@ -15,7 +15,6 @@ export function useActionModal({ addApi, editApi, onSuccess, defaultFormState })
   async function submitForm(type) {
     let values = await formRef.value.validate().catch(() => null)
     if (!values) return
-    confirmLoading.value = true
     let requestMethod
     if (type === 1) {
       requestMethod = addApi
@@ -24,6 +23,7 @@ export function useActionModal({ addApi, editApi, onSuccess, defaultFormState })
     } else if (type === 3) {
     }
     if (!requestMethod) return
+    confirmLoading.value = true
     let res = await requestMethod(formState.value).finally(() => {
       confirmLoading.value = false
     })
