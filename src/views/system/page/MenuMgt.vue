@@ -1,22 +1,22 @@
 <template>
   <a-card :bordered="false">
-    <div class="text-3xl text-red-500">菜单列表</div>
-    <div class="search-box flex justify-end mb-3">
-      <div style="margin-right: 10px" @keyup.enter="loadData(true)">
-        <a-input placeholder="请输入姓名" v-model:value="queryParam.pid" />
-      </div>
-      <a-button @click="loadData(true)">查询</a-button>
+    <div>菜单列表</div>
+    <div>
+      <a-space class="search-box">
+        <a-input
+          @keyup.enter="loadData(true)"
+          placeholder="请输入姓名"
+          v-model:value="queryParam.pid"
+        />
+        <a-button type="primary" @click="loadData(true)">查询</a-button>
+        <a-button @click="loadData(true)">重置</a-button>
+      </a-space>
     </div>
-    <div class="action-box">
-      <a-button
-        style="margin-right: 10px"
-        @click="handleAdd({ pid: '0' })"
-        type="primary"
-      >
-        新增
-      </a-button>
+
+    <a-space class="action-box">
+      <a-button @click="handleAdd({ pid: '0' })"> 新增 </a-button>
       <a-button @click="handleBatchDelete">批量删除</a-button>
-    </div>
+    </a-space>
     <a-table
       :loading="loading"
       :pagination="false"
@@ -65,8 +65,8 @@
           </a-dropdown>
         </template>
       </template>
-    </a-table></a-card
-  >
+    </a-table>
+  </a-card>
   <menu-action-modal ref="actionModal" @onOk="handleOk"></menu-action-modal>
 </template>
 <script setup>
@@ -97,7 +97,7 @@ const columns = [
   {
     title: '操作',
     align: 'center',
-    width:150,
+    width: 150,
     fixed: 'right',
     dataIndex: 'action',
   },
@@ -133,12 +133,9 @@ const {
 
 <style>
 .search-box {
-  display: flex;
-  justify-content: flex-end;
   margin-bottom: 10px;
 }
 .action-box {
-  display: flex;
   margin-bottom: 10px;
 }
 </style>
