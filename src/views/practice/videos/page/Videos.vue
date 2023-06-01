@@ -7,7 +7,7 @@
 <script setup>
 import { ref } from 'vue'
 import VideoPlayer from '../components/VideoPlayer.vue'
-import sampleVideo from '../data/SampleVideo_1280x720_30mb.mp4'
+// import sampleVideo from '../data/SampleVideo_1280x720_30mb.mp4'
 const videoOptions = ref({
   progressControl: false,
   // autoplay: true,
@@ -37,7 +37,7 @@ const videoOptions = ref({
   // },
   sources: [
     {
-      src: sampleVideo,
+      // src: sampleVideo,
       type: 'video/mp4',
     },
   ],
