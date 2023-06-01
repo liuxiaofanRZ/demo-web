@@ -1,8 +1,8 @@
 <template>
   <a-layout class="base-container" @click="handleMobileCollapsed">
     <a-layout-header class="base-header">
-      <div class="text-20px px-20px">
-        <img class="w-40px mr-30px" src="@/assets/logo.svg" alt="">
+      <div class="logo-box">
+        <img class="logo" src="@/assets/logo.svg" alt="" />
         <menu-unfold-outlined
           @click.stop="setCollapsed(false)"
           v-if="collapsed"
@@ -48,7 +48,7 @@ import { EnumDeviceType } from '@/stores/main'
 import { onMounted } from 'vue'
 import SideMenu from './SideMenu.vue'
 const mainStore = useMainStore()
-const { setCollapsed, setDeviceType } = mainStore
+const { setCollapsed } = mainStore
 const { collapsed, isDesktop, isMobile } = storeToRefs(mainStore)
 function handleMobileCollapsed() {
   if (isMobile.value && !collapsed.value) {
@@ -129,5 +129,13 @@ onMounted(() => {
   border-right: 0;
   overflow-y: auto;
   overflow-x: hidden;
+}
+.logo-box {
+  padding: 0 20px;
+  font-size: 20px;
+}
+.logo {
+  width: 40px;
+  margin-right: 30px;
 }
 </style>

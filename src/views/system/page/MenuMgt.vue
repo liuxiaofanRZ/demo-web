@@ -1,69 +1,80 @@
 <template>
-  <div class="text-3xl text-red-500">菜单列表</div>
-  <div class="search-box flex justify-end mb-3">
-    <div style="margin-right: 10px" @keyup.enter="loadData(true)">
-      <AInput placeholder="请输入姓名" v-model:value="queryParam.pid" />
+  <a-card :bordered="false">
+    <div class="text-3xl text-red-500">菜单列表</div>
+    <div class="search-box flex justify-end mb-3">
+      <div style="margin-right: 10px" @keyup.enter="loadData(true)">
+        <a-input placeholder="请输入姓名" v-model:value="queryParam.pid" />
+      </div>
+      <a-button @click="loadData(true)">查询</a-button>
     </div>
-    <AButton @click="loadData(true)">查询</AButton>
-  </div>
-  <div class="action-box">
-    <AButton
-      style="margin-right: 10px"
-      @click="handleAdd({ pid: '0' })"
-      type="primary"
+    <div class="action-box">
+      <a-button
+        style="margin-right: 10px"
+        @click="handleAdd({ pid: '0' })"
+        type="primary"
+      >
+        新增
+      </a-button>
+      <a-button @click="handleBatchDelete">批量删除</a-button>
+    </div>
+    <a-table
+      :loading="loading"
+      :pagination="false"
+      :showQuickJumper="true"
+      :dataSource="dataSource"
+      :columns="columns"
+      @change="handlePageChange"
+      :expandedRowKeys="expandedRowKeys"
+      @expandedRowsChange="expandedRowsChange"
+      :row-selection="{
+        onChange: handleSelectedRowsChange,
+        selectedRowKeys: selectedRowKeys,
+        preserveSelectedRowKeys: true,
+      }"
+      rowKey="id"
+      :scroll="{ x: 1000 }"
     >
-      新增
-    </AButton>
-    <AButton @click="handleBatchDelete">批量删除</AButton>
-  </div>
-  <ATable
-    :loading="loading"
-    :pagination="false"
-    :showQuickJumper="true"
-    :dataSource="dataSource"
-    :columns="columns"
-    @change="handlePageChange"
-    :expandedRowKeys="expandedRowKeys"
-    @expandedRowsChange="expandedRowsChange"
-    :row-selection="{
-      onChange: handleSelectedRowsChange,
-      selectedRowKeys: selectedRowKeys,
-      preserveSelectedRowKeys: true,
-    }"
-    rowKey="id"
-  >
-    <!-- :scroll="{
+      <!-- :scroll="{
       scrollToFirstRowOnChange: true,
       y: '500px',
     }" -->
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.dataIndex === 'action'">
-        <AButton
-          style="margin-right: 10px"
-          size="small"
-          @click="handleEdit(record)"
-        >
-          编辑
-        </AButton>
-        <AButton
-          style="margin-right: 10px"
-          size="small"
-          @click="handleAdd({ pid: record.id })"
-          >添加子路由</AButton
-        >
-        <APopconfirm title="确定删除这条数据？" @confirm="handleDelete(record)">
-          <AButton size="small" type="danger">删除</AButton>
-        </APopconfirm>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'action'">
+          <a @click="handleEdit(record)"> 编辑 </a>
+          <a-divider type="vertical" />
+          <a-dropdown>
+            <a>
+              更多
+              <DownOutlined />
+            </a>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item>
+                  <a @click="handleAdd({ pid: record.id })">添加子路由 </a>
+                </a-menu-item>
+                <a-menu-item>
+                  <a-popconfirm
+                    title="确定删除这条数据？"
+                    @confirm="handleDelete(record)"
+                  >
+                    <a>删除</a>
+                  </a-popconfirm>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+        </template>
       </template>
-    </template>
-  </ATable>
-  <MenuActionModal ref="actionModal" @onOk="handleOk"></MenuActionModal>
+    </a-table></a-card
+  >
+  <menu-action-modal ref="actionModal" @onOk="handleOk"></menu-action-modal>
 </template>
 <script setup>
 import { deleteBatchMenu, deleteMenu, getMenuTree } from '@/api'
 import { usePage } from '@/utils/composable/usePage'
 import MenuActionModal from '@/views/system/component/MenuActionModal.vue'
 import { ref } from 'vue'
+import { DownOutlined } from '@ant-design/icons-vue'
 
 const columns = [
   {
@@ -86,6 +97,8 @@ const columns = [
   {
     title: '操作',
     align: 'center',
+    width:150,
+    fixed: 'right',
     dataIndex: 'action',
   },
 ]
