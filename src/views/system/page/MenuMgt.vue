@@ -119,7 +119,6 @@ const {
 </script>
 
 <style>
-
 .search-box {
   display: flex;
   justify-content: flex-end;
