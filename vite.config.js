@@ -15,9 +15,9 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default defineConfig({
   // base: '/demo/',
-  build: {
-    outDir:"./demo"
-  },
+  // build: {
+  //   outDir:"./demo"
+  // },
   plugins: [
     Unocss({ /* options */ }),
     vue(),
