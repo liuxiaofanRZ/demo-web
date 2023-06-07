@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { userLogin } from '@/api'
+import router from '@/router'
 export const useUserStore = defineStore('login', () => {
   const userinfo = ref(null)
 
@@ -13,6 +14,9 @@ export const useUserStore = defineStore('login', () => {
     }
     return res
   }
+  const logout = async () => {
+    router.push('Login')
+  }
 
-  return { userinfo, login }
+  return { userinfo, login, logout }
 })

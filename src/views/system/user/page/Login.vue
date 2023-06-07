@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-bluegray h-screen flex justify-center items-center">
-    <a-card title="登录" size="small" :bordered="false" style="width: 400px">
+  <div class="login">
+    <a-card title="登录" style="width: 400px">
       <a-form
         :model="modelRef"
         :rules="rulesRef"
@@ -22,9 +22,10 @@
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button :loading="loading" type="primary" html-type="submit"
-            >登录</a-button
-          >
+          <a-button :loading="loading" type="primary" html-type="submit">
+            登录
+          </a-button>
+          <router-link style="margin-left: 10px;" to="Register">注册</router-link>
         </a-form-item>
       </a-form>
     </a-card>
@@ -65,4 +66,12 @@ const onFinishFailed = (errorInfo) => {
 }
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+</style>

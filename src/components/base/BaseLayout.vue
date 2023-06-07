@@ -8,6 +8,8 @@
           v-if="collapsed"
         />
         <menu-fold-outlined @click.stop="setCollapsed(true)" v-else />
+        <div style="flex: 1"></div>
+        <div @click="logout" class="logout">退出</div>
       </div>
     </a-layout-header>
     <a-layout>
@@ -40,21 +42,26 @@
   </a-layout>
 </template>
 <script setup>
-import { useMainStore } from '@/stores/main'
+import { useMainStore, EnumDeviceType } from '@/stores/main'
+import { useUserStore } from '@/stores/user'
+
 import { storeToRefs } from 'pinia'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import enquire from 'enquire.js'
-import { EnumDeviceType } from '@/stores/main'
 import { onMounted } from 'vue'
 import SideMenu from './SideMenu.vue'
+const userStore = useUserStore()
 const mainStore = useMainStore()
+const { logout } = userStore
 const { setCollapsed } = mainStore
 const { collapsed, isDesktop, isMobile } = storeToRefs(mainStore)
+
 function handleMobileCollapsed() {
   if (isMobile.value && !collapsed.value) {
     setCollapsed(true)
   }
 }
+
 onMounted(() => {
   // 媒体查询
   enquire
@@ -133,9 +140,14 @@ onMounted(() => {
 .logo-box {
   padding: 0 20px;
   font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 .logo {
   width: 40px;
   margin-right: 30px;
+}
+.logout {
+  cursor: pointer;
 }
 </style>
