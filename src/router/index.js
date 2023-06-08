@@ -44,9 +44,15 @@ router = createRouter({
 })
 router.$shortcut = shortcut // TODO: 一些快捷功能（不是很好用，待重构）
 router.$dynamicRoutesFlag = false // 是否添加了动态路由
-/* 添加动态路由 */
+router.$clearDynamicRoutes = (nameList) => {
+  // 清空动态路由，用于重新登录，切换用户的时候
+  nameList.forEach(router.removeRoute)
+  router.$dynamicRoutesFlag = false
+}
+/* 处理动态路由 */
+// 添加路由
 const pages = import.meta.glob('/src/views/**/page/*.vue') // 路由页面的父级目录名必须是page
-function handleRoute(list, parentName) {
+function handleAddRoute(list, parentName) {
   list.forEach((menu) => {
     let route = {
       name: menu.id, // TODO:在服务端根据path生成该字段,先用id代替
@@ -70,15 +76,30 @@ function handleRoute(list, parentName) {
     }
     // 处理子路由
     if (menu.children && menu.children.length > 0) {
-      handleRoute(menu.children, route.name)
+      handleAddRoute(menu.children, route.name)
     }
   })
 }
 async function addRoutes() {
   const menuStore = useMenuStore()
   await menuStore.getMenu()
-  handleRoute(menuStore.menuList, shortcut.home)
+  handleAddRoute(menuStore.menuList, shortcut.home)
 }
+// 清空路由
+function handleRemoveRoute(menu) {
+  if (Array.isArray(menu.children)) {
+    menu.children.forEach(handleRemoveRoute)
+  }
+  router.removeRoute(menu.id)
+}
+function clearRoutes() {
+  const menuStore = useMenuStore()
+  menuStore.menuList.forEach(handleRemoveRoute)
+  router.$dynamicRoutesFlag = false
+  menuStore.setMenuList()
+  console.log('动态路由已清空')
+}
+router.$clearRoutes = clearRoutes
 
 const staticRoutes = ['/Login', '/Register', '/'] // 静态路由白名单
 // 全局导航守卫

@@ -39,11 +39,14 @@ import { message } from 'ant-design-vue'
 import { ref,onMounted } from 'vue'
 import { useUserStore } from '@/stores/user.js'
 import { useRouter } from 'vue-router'
+import { useMenuStore } from '@/stores/menu'
 const userStore = useUserStore()
+const menuStore = useMenuStore()
 const router = useRouter()
 
 onMounted(()=>{
-  console.log(router)
+  // 清除路由
+  router.$clearRoutes()
 })
 
 // 登录表单

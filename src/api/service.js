@@ -51,7 +51,8 @@ http.interceptors.response.use(
             Modal.error({
               keyboard: false,
               title: '提示',
-              content: data.message,
+              // content: data.message,
+              content:"token已过期，请重新登录",
               onOk: () => {
                 isLoggingOut = false
                 router.push({ name: 'Login' })
