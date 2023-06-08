@@ -2,16 +2,21 @@ import BaseLayout from '@/components/base/BaseLayout.vue'
 import { useMenuStore } from '@/stores/menu'
 import Error404 from '@/views/system/page/Error404.vue'
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
-
-const baseRouteName = 'base'
-const router = createRouter({
+let router
+const shortcut = {
+  home: 'Base',
+  login: 'Login',
+  register: 'Register',
+  error404: 'Error404',
+}
+router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       redirect: 'Home',
       component: BaseLayout,
-      name: baseRouteName,
+      name: shortcut.home,
       children: [
         // {
         //   path:"/MenuMgt",
@@ -22,24 +27,25 @@ const router = createRouter({
     },
     {
       path: '/Login',
-      name: 'Login',
+      name: shortcut.login,
       component: () => import('@/views/system/user/page/Login.vue'),
     },
     {
       path: '/Register',
-      name: 'Register',
+      name: shortcut.register,
       component: () => import('@/views/system/user/page/Register.vue'),
     },
     {
       path: '/:pathMatch(.*)',
-      name: 'Error404',
+      name: shortcut.error404,
       component: Error404,
     },
   ],
 })
-
-/* 动态添加路由-开始 */
-const pages = import.meta.glob('/src/views/**/page/*.vue')
+router.$shortcut = shortcut // TODO: 一些快捷功能（不是很好用，待重构）
+router.$dynamicRoutesFlag = false // 是否添加了动态路由
+/* 添加动态路由 */
+const pages = import.meta.glob('/src/views/**/page/*.vue') // 路由页面的父级目录名必须是page
 function handleRoute(list, parentName) {
   list.forEach((menu) => {
     let route = {
@@ -71,18 +77,19 @@ function handleRoute(list, parentName) {
 async function addRoutes() {
   const menuStore = useMenuStore()
   await menuStore.getMenu()
-  handleRoute(menuStore.menuList, baseRouteName)
+  handleRoute(menuStore.menuList, shortcut.home)
 }
-let dynamicRoutesFlag = false
+
+const staticRoutes = ['/Login', '/Register', '/'] // 静态路由白名单
+// 全局导航守卫
 router.beforeEach(async (to) => {
-  if (dynamicRoutesFlag) {
+  if (router.$dynamicRoutesFlag || staticRoutes.includes(to.path)) {
     return true
   } else {
     await addRoutes(router)
-    dynamicRoutesFlag = true
+    router.$dynamicRoutesFlag = true
     return to.fullPath
   }
 })
-/* 动态添加路由-结束 */
 
 export default router

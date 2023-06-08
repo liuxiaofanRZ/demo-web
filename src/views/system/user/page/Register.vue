@@ -39,7 +39,8 @@
 import { ref } from 'vue'
 import { userRegister } from '@/api/index.js'
 import { message } from 'ant-design-vue'
-import router from '@/router'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const formRef = ref()
 const formState = ref({
   username: '',

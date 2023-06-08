@@ -69,13 +69,11 @@ onMounted(() => {
       match: function () {
         console.log('isMobile')
         mainStore.setDeviceType(EnumDeviceType.mobile)
-        mainStore.setCollapsed(true)
       },
     })
     .register('screen and (min-width: 767.98px)', {
       match: function () {
         console.log('isDesktop')
-        mainStore.setCollapsed(false)
         mainStore.setDeviceType(EnumDeviceType.desktop)
       },
     })

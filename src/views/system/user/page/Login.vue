@@ -25,7 +25,9 @@
           <a-button :loading="loading" type="primary" html-type="submit">
             登录
           </a-button>
-          <router-link style="margin-left: 10px;" to="Register">注册</router-link>
+          <router-link style="margin-left: 10px" :to="{ name: 'Register' }"
+            >注册</router-link
+          >
         </a-form-item>
       </a-form>
     </a-card>
@@ -34,13 +36,17 @@
 
 <script setup>
 import { message } from 'ant-design-vue'
-import { ref } from 'vue'
-import { userLogin } from '@/api/index.js'
+import { ref,onMounted } from 'vue'
 import { useUserStore } from '@/stores/user.js'
 import { useRouter } from 'vue-router'
 const userStore = useUserStore()
 const router = useRouter()
 
+onMounted(()=>{
+  console.log(router)
+})
+
+// 登录表单
 const modelRef = ref({
   username: '',
   password: '',
@@ -58,7 +64,7 @@ const onFinish = async (values) => {
   })
   if (res.success) {
     message.success(res.message)
-    router.push('/')
+    router.push({ name: 'Base' })
   }
 }
 const onFinishFailed = (errorInfo) => {
