@@ -125,7 +125,7 @@ router.beforeEach(async (to,from) => {
     if (noTokenRoutes.includes(to.path)) {
       return true
     } else {
-      return false
+      return {path:'/Login'}
     }
   }
 })
