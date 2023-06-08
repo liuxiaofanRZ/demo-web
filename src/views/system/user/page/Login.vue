@@ -67,7 +67,7 @@ const onFinish = async (values) => {
   })
   if (res.success) {
     message.success(res.message)
-    router.push({ name: 'Base' })
+    router.replace({ name: 'Base' })
   }
 }
 const onFinishFailed = (errorInfo) => {

@@ -1,5 +1,6 @@
 import BaseLayout from '@/components/base/BaseLayout.vue'
 import { useMenuStore } from '@/stores/menu'
+import { useUserStore } from '@/stores/user'
 import Error404 from '@/views/system/page/Error404.vue'
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
 let router
@@ -102,14 +103,30 @@ function clearRoutes() {
 router.$clearRoutes = clearRoutes
 
 const staticRoutes = ['/Login', '/Register', '/'] // 静态路由白名单
+const noTokenRoutes = ['/Login', '/Register']
 // 全局导航守卫
-router.beforeEach(async (to) => {
-  if (router.$dynamicRoutesFlag || staticRoutes.includes(to.path)) {
-    return true
-  } else {
-    await addRoutes(router)
-    router.$dynamicRoutesFlag = true
-    return to.fullPath
+router.beforeEach(async (to,from) => {
+  console.log(to,from)
+  const userStore = useUserStore()
+  // 已登录
+  if (userStore.userinfo) {
+    if (noTokenRoutes.includes(to.path)) {
+      return ({path:from.fullPath})
+    } else if (router.$dynamicRoutesFlag) {
+      return true
+    } else {
+      await addRoutes(router)
+      router.$dynamicRoutesFlag = true
+      return to.fullPath
+    }
+  }
+  // 未登录
+  else {
+    if (noTokenRoutes.includes(to.path)) {
+      return true
+    } else {
+      return false
+    }
   }
 })
 
