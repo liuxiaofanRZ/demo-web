@@ -1,6 +1,5 @@
 <template>
   <a-card :bordered="false">
-    <div>菜单列表</div>
     <div>
       <a-space class="search-box">
         <a-input

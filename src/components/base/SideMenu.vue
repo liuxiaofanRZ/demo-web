@@ -2,7 +2,7 @@
 import { useMenuStore } from '@/stores/menu'
 import { Menu } from 'ant-design-vue'
 import 'ant-design-vue/es/menu/style/index.css'
-import { ref } from 'vue'
+import { ref,watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const { SubMenu, Item } = Menu
 import { useMainStore } from '@/stores/main'
@@ -20,6 +20,9 @@ export default {
     const mainStore = useMainStore()
     const { collapsed } = storeToRefs(mainStore)
     const selectedKeysArr = ref([route.meta.id])
+    watchEffect(() => {
+      selectedKeysArr.value = [route.name]
+    })
     // event
     function handleSelect({ item: { menuDetail }, key, selectedKeys }) {
       if (!menuDetail.id) return

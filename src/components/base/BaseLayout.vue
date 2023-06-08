@@ -9,6 +9,7 @@
         />
         <menu-fold-outlined @click.stop="setCollapsed(true)" v-else />
         <div style="flex: 1"></div>
+        <div>{{ userinfo?.username }}</div>
         <div @click="logout" class="logout">退出</div>
       </div>
     </a-layout-header>
@@ -36,6 +37,7 @@
         <SideMenu></SideMenu>
       </a-layout-sider>
       <a-layout-content class="base-content">
+        <bread-crumb></bread-crumb>
         <RouterView />
       </a-layout-content>
     </a-layout>
@@ -44,7 +46,6 @@
 <script setup>
 import { useMainStore, EnumDeviceType } from '@/stores/main'
 import { useUserStore } from '@/stores/user'
-
 import { storeToRefs } from 'pinia'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import enquire from 'enquire.js'
@@ -53,6 +54,8 @@ import SideMenu from './SideMenu.vue'
 const userStore = useUserStore()
 const mainStore = useMainStore()
 const { logout } = userStore
+const { userinfo } = storeToRefs(userStore)
+
 const { setCollapsed } = mainStore
 const { collapsed, isDesktop, isMobile } = storeToRefs(mainStore)
 
@@ -147,5 +150,6 @@ onMounted(() => {
 }
 .logout {
   cursor: pointer;
+  margin-left: 10px;
 }
 </style>

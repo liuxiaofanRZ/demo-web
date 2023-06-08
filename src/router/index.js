@@ -1,4 +1,3 @@
-import BaseLayout from '@/components/base/BaseLayout.vue'
 import { useMenuStore } from '@/stores/menu'
 import { useUserStore } from '@/stores/user'
 import Error404 from '@/views/system/page/Error404.vue'
@@ -16,7 +15,8 @@ router = createRouter({
     {
       path: '/',
       redirect: 'Home',
-      component: BaseLayout,
+      component: () => import('@/components/base/BaseLayout.vue'),
+      meta: { title: '首页' },
       name: shortcut.home,
       children: [
         // {
@@ -29,12 +29,12 @@ router = createRouter({
     {
       path: '/Login',
       name: shortcut.login,
-      component: () => import('@/views/system/user/page/Login.vue'),
+      component: () => import('@/views/system/static/Login.vue'),
     },
     {
       path: '/Register',
       name: shortcut.register,
-      component: () => import('@/views/system/user/page/Register.vue'),
+      component: () => import('@/views/system/static/Register.vue'),
     },
     {
       path: '/:pathMatch(.*)',
@@ -66,7 +66,10 @@ function handleAddRoute(list, parentName) {
       },
     }
     if (!menu.path) return
-
+    // 如果当前路由是父级路由，就把第一个子路由设置为重定向目标
+    if (Array.isArray(menu.children)) {
+      route.redirect = menu.children[0].path
+    }
     // 设置路由组件
     route.component = pages[`/src/views${menu.component}`] || RouterView
     // 添加路由
@@ -76,7 +79,7 @@ function handleAddRoute(list, parentName) {
       router.addRoute(route)
     }
     // 处理子路由
-    if (menu.children && menu.children.length > 0) {
+    if (Array.isArray(menu.children)) {
       handleAddRoute(menu.children, route.name)
     }
   })
@@ -105,13 +108,13 @@ router.$clearRoutes = clearRoutes
 const staticRoutes = ['/Login', '/Register', '/'] // 静态路由白名单
 const noTokenRoutes = ['/Login', '/Register']
 // 全局导航守卫
-router.beforeEach(async (to,from) => {
-  console.log(to,from)
+router.beforeEach(async (to, from) => {
+  console.log(to)
   const userStore = useUserStore()
   // 已登录
   if (userStore.userinfo) {
     if (noTokenRoutes.includes(to.path)) {
-      return ({path:from.fullPath})
+      return { path: from.fullPath }
     } else if (router.$dynamicRoutesFlag) {
       return true
     } else {
@@ -125,7 +128,7 @@ router.beforeEach(async (to,from) => {
     if (noTokenRoutes.includes(to.path)) {
       return true
     } else {
-      return {path:'/Login'}
+      return { path: '/Login' }
     }
   }
 })
